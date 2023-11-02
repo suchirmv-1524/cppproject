@@ -8,7 +8,8 @@ using namespace std;
 
 // enum for switch case
 typedef enum{
-    NAME, FNAME, GENDER, ADDRESS, MARITIAL, NATIONALITY, DOB, AGE, PHNO, AADNO, PANNO, ACCTYPE
+    NAME, FNAME, GENDER, ADDRESS, MARITIAL, NATIONALITY, DOB, AGE, PHNO, AADNO, PANNO, ACCTYPE,
+    EMAIL
 }CHOICE;
 
 // Account class declaration
@@ -16,16 +17,18 @@ class Account{
     private:
         // Declaration of variables for storing personal details
         // debval is debit card validity
+        long long int accno, debno;
         long long int balance, phno, aadno, panno;
         char name[40], fname[40], gender[7], address[1000], 
-        maritial[10], nationality[40], acctype[8], dob[9];
+        maritial[10], nationality[40], acctype[8], dob[9], email[50];
         int age, debval;
 
     public:
         // declaration of constructors and functions
-        long long int accno, debno;
         Account();
         Account(int flag);
+        long long int getAccNo();
+        long long int getDebNo();
         void getdet(void *holder, CHOICE detmap);
         void filldet(void *holder, CHOICE detmap);
         void appdebcard();

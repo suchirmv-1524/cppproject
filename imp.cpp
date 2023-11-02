@@ -18,6 +18,14 @@ Account::Account(int flag){
     this->balance=0;
 }
 
+long long int Account::getAccNo(){
+    return this->accno;
+}
+
+long long int Account::getDebNo(){
+    return this->debno;
+}
+
 void Account::filldet(void* holder, CHOICE detmap){
     // Function to fill paticular detail of account
     switch (detmap){
@@ -57,6 +65,8 @@ void Account::filldet(void* holder, CHOICE detmap){
         case AGE:
             this->age=*((int*) holder);
             break;
+        case EMAIL:
+            strcpy(this->email, ((char*) holder));
     }
 }
 
@@ -99,6 +109,8 @@ void Account::getdet(void* holder, CHOICE detmap){
         case AGE:
             *((int*) holder)=this->age;
             break;
+        case EMAIL:
+            strcpy(((char*) holder), this->email);
     }
 }
 
@@ -142,7 +154,7 @@ int Account::findacc(long long int key){
     // Function to check whether an account number generated already exists
     int count=0;
     for (int i=0; i<num; i++){
-        if (key==accs[i].accno)
+        if (key==accs[i].getAccNo())
             count++; 
     }
     if (count>1)
@@ -157,7 +169,7 @@ int Account::finddeb(long long int key){
     // Function to check whether an debit card number generated already exists
     int count=0;
     for (int i=0; i<num; i++){
-        if (key==accs[i].debno)
+        if (key==accs[i].getDebNo())
             count++; 
     }
     if (count>1)
@@ -232,16 +244,16 @@ void createaccount(){
     // Function to create a new account
     printupper();
     cout<<endl<<"Option 1:Create new account..."<<endl<<endl;
-    string det[12]={"Name", "Father\'s Name", "Gender", "Address", "Maritial status", 
+    string det[13]={"Name", "Father\'s Name", "Gender", "Address", "Maritial status", 
     "Nationality", "Date of birth", "Age", "Phone Number", "Aadhar Number", "PAN Number", 
-    "Account Type"};
+    "Account Type", "email"};
     Account tempacc;
 
     // Storing user details
     for (int i=0; i<12; i++){
         cout<<"Enter your "<<det[i]<<":";
         if (i==NAME || i==FNAME || i==ADDRESS || i==MARITIAL || i==NATIONALITY 
-        || i==DOB || i==GENDER || i==ACCTYPE){
+        || i==DOB || i==GENDER || i==ACCTYPE || i==EMAIL){
             string temp;
             getline(cin>>ws, temp);
             char temps[400];
@@ -267,7 +279,7 @@ void createaccount(){
     // Displaying account number to user and updating accounts.dat file
     cout<<endl<<endl;
     cout<<"Congratulations! Your account has been created successfully.";
-    cout<<"Your account number is "<<tempacc.accno<<endl;
+    cout<<"Your account number is "<<tempacc.getAccNo()<<endl;
     saveaccs();
 }
 
@@ -337,7 +349,7 @@ Account* getaccount(long long int accno){
     // Function to get account object for a particular account number
     int i;
     for (i=0; i<num; i++){
-        if (accs[i].accno==accno){
+        if (accs[i].getAccNo()==accno){
             break;
         }
     }

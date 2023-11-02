@@ -1,6 +1,7 @@
 #include "header.h"
 
 int main(){
+    //1741948824
     ofstream ifile("accounts.dat", ios::binary);
     int num=1;
     ifile.write((char*) &num, sizeof(int));
@@ -23,6 +24,8 @@ int main(){
     acc.filldet(c, ACCTYPE);
     strcpy(c, "15/02/2005");
     acc.filldet(c, DOB);
+    strcpy(c, "sohanshanbhag15off@gmail.com");
+    acc.filldet(c, EMAIL);
 
     long long int temp;
     temp=8050042295;
@@ -38,6 +41,6 @@ int main(){
     ifile.write((char*) &acc, sizeof(Account));
     ifile.close();
 
-    cout<<acc.accno;
+    cout<<acc.getAccNo();
     return 0;
 }
