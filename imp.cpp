@@ -4,7 +4,7 @@ Account accs[100];
 int num=0;
 ifstream ifile;
 ofstream wfile;
-
+//simply
 Account::Account(){}
 
 Account::Account(int flag){
