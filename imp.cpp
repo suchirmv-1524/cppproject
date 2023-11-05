@@ -183,16 +183,12 @@ int Account::finddeb(long long int key){
 
 long long int Account::chkbal(){
     // Code for check balance : Suchir
-    return this->balance;
+    
 }
 
 void Account::deposit(long long int amount){
     // Code for cash deposit : Suchir
-    cout<<endl<<"Account no : "<<this->accno<<endl;
-    this->balance += amount;
-    cout<<"The Amount : "<<amount<<" has been successfully deposited to your account"<<endl<<endl;
-    cout<<"Available Balance : "<<this->balance<<endl;
-    saveaccs();
+    
 }
 
 void Account::withdraw(long long int amount){
@@ -418,11 +414,7 @@ void printoptions(){
             }
             case 1:{
                 /*Code for cash deposit : Suchir*/
-                long long int tempy;
-                cout<<endl<<endl<<"Option 1: Cash Deposit..."<<endl<<endl;
-                cout<<"Enter the amount : ";
-                cin>>tempy;
-                acc->withdraw(tempy);
+                
             }
             case 2:{
                 /*Code for cash withdrawal : Yogesh*/
@@ -439,8 +431,6 @@ void printoptions(){
             }
             case 4:{
                 /*Code for checking balance : Suchir*/
-                cout<<endl<<endl<<"Option 4: Check for Balance..."<<endl<<endl;
-                cout<<"Available Balance : "<<acc->chkbal()<<endl<<endl;
             }
             case 5:{
                 /*Code for updating kyc : Yogesh*/
@@ -448,7 +438,7 @@ void printoptions(){
                 acc->updatekyc();
             }
             case 6:{
-                /*Code for tranfering fund : Suchir*/
+                /*Code for tranfering fund : Yogesh*/
                 long long int recp_account_no;
                 long long int recp_amount;
                 Account *recp_acc;
