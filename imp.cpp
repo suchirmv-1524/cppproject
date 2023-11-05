@@ -449,8 +449,13 @@ void printoptions(){
                 cin>>recp_amount;
                 recp_acc = getaccount(recp_account_no);
                 acc->withdraw(recp_amount);
-                recp_acc->deposit(recp_amount);
-                cout<<"The Amount has been successfully transfered "<<endl;
+                if(acc->chkbal() > recp_amount){
+                    recp_acc->deposit(recp_amount);
+                    cout<<"The Amount has been successfully transfered "<<endl;
+                }
+                else{
+                    cout<<"The Amount has not been transfered"<<endl;
+                }
             }
         }
     }
