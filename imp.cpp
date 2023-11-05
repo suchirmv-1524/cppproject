@@ -4,7 +4,7 @@ Account accs[100];
 int num=0;
 ifstream ifile;
 ofstream wfile;
-//simply
+
 Account::Account(){}
 
 Account::Account(int flag){
@@ -13,17 +13,9 @@ Account::Account(int flag){
     while (findacc(this->accno)==1){
         this->accno=randgen(10);
     }
-    this->debval=-1;
+    this->debval=;
     this->debno=-1;
     this->balance=0;
-}
-
-long long int Account::getAccNo(){
-    return this->accno;
-}
-
-long long int Account::getDebNo(){
-    return this->debno;
 }
 
 void Account::filldet(void* holder, CHOICE detmap){
@@ -54,19 +46,17 @@ void Account::filldet(void* holder, CHOICE detmap){
             strcpy(this->dob, ((char*) holder));
             break;
         case PHNO:
-            this->phno=*((long long int*) holder);
+            this->phno=((long long int) holder);
             break;
         case AADNO:
-            this->aadno=*((long long int*) holder);
+            this->aadno=((long long int) holder);
             break;
         case PANNO:
-            this->panno=*((long long int*) holder);
+            this->panno=((long long int) holder);
             break;
         case AGE:
-            this->age=*((int*) holder);
+            this->age=((int) holder);
             break;
-        case EMAIL:
-            strcpy(this->email, ((char*) holder));
     }
 }
 
@@ -98,19 +88,17 @@ void Account::getdet(void* holder, CHOICE detmap){
             strcpy(((char*) holder), this->dob);
             break;
         case PHNO:
-            *((long long int*) holder)=this->phno;
+            ((long long int) holder)=this->phno;
             break;
         case AADNO:
-            *((long long int*) holder)=this->aadno;
+            ((long long int) holder)=this->aadno;
             break;
         case PANNO:
-            *((long long int*) holder)=this->panno;
+            ((long long int) holder)=this->panno;
             break;
         case AGE:
-            *((int*) holder)=this->age;
+            ((int) holder)=this->age;
             break;
-        case EMAIL:
-            strcpy(((char*) holder), this->email);
     }
 }
 
@@ -154,7 +142,7 @@ int Account::findacc(long long int key){
     // Function to check whether an account number generated already exists
     int count=0;
     for (int i=0; i<num; i++){
-        if (key==accs[i].getAccNo())
+        if (key==accs[i].accno)
             count++; 
     }
     if (count>1)
@@ -169,7 +157,7 @@ int Account::finddeb(long long int key){
     // Function to check whether an debit card number generated already exists
     int count=0;
     for (int i=0; i<num; i++){
-        if (key==accs[i].getDebNo())
+        if (key==accs[i].debno)
             count++; 
     }
     if (count>1)
@@ -183,113 +171,24 @@ int Account::finddeb(long long int key){
 
 long long int Account::chkbal(){
     // Code for check balance : Suchir
-    
+    return this->balance;
 }
 
 void Account::deposit(long long int amount){
     // Code for cash deposit : Suchir
-    
+    cout<<endl<<"Your account no : "<<this->accno<<endl;
+    this->balance += amount;
+    cout << "Deposit of Rs. " << amount << " has been successfully completed" << endl;
+    cout<<"Updated Balance : "<<this->balance<<endl;
+    saveaccs();
 }
 
 void Account::withdraw(long long int amount){
     // Code for cash withdrawal : Yogesh
-    if(this->balance < amount){
-        cout<<endl<<"Account no : "<<this->accno<<endl;
-        cout<<"Insufficient Balance."<<endl;
-        cout<<"Available Balance : "<<this->balance<<endl;
-    }
-    else{
-        this->balance -= amount;
-        cout<<endl<<"Account no : "<<this->accno<<endl;
-        cout<<"Successfully Withdrew Rs. "<<amount<<endl;
-        cout<<"Available Balance : "<<this->balance<<endl;
-    }
-    saveaccs();    
 }
 
 void Account::updatekyc(){
     // Code for update kyc : Yogesh
-    int choice;
-    cout<<endl<<endl<<"Welcome to Update KYC Service."<<endl;
-    cout<<endl<<"Press"<<endl<<"1 for updating Aadhaar details"<<endl<<"2 for updating Pan details"<<
-    endl<<"3 for updating Mobile no."<<endl<<"4 for updating Banking Name"<<
-    endl<<"5 for updating Address"<<endl<<"6 for updating Email Address"<<endl<<"0 for exit."<<endl<<endl;
-
-    choice = getche() - '0';
-    switch(choice){
-        case 0:{
-            cout<<"You have entered choice - 0"<<endl;
-            cout<<"To exit."<<endl<<endl;
-        }
-        case 1:{
-            long long int temp;
-            cout<<"You have entered choice - 1"<<endl;
-            cout<<"To change your Aadhaar details"<<endl;
-            cout<<"Please enter your new Aadhaar no : ";
-            cin>>temp;
-            this->filldet(&temp,AADNO);
-            cout<<endl<<"Successfully Changed !!!"<<endl;
-            cout<<"Your new Aadhaar no is : "<<temp<<endl<<endl;
-        }
-        case 2:{
-            long long int temp;
-            cout<<"You have entered choice - 2"<<endl;
-            cout<<"To change your Pan details"<<endl;
-            cout<<"Please enter your new PAN no : ";
-            cin>>temp;
-            this->filldet(&temp,PANNO);
-            cout<<endl<<"Successfully Changed !!!"<<endl;
-            cout<<"Your new PAN no is : "<<temp<<endl<<endl;
-        }
-        case 3:{
-            long long int temp;
-            cout<<"You have entered choice - 3"<<endl;
-            cout<<"To change your Mobile no."<<endl;
-            cout<<"Please enter your new Mobile no : ";
-            cin>>temp;
-            this->filldet(&temp,PHNO);
-            cout<<endl<<"Successfully Changed !!!"<<endl;
-            cout<<"Your new PAN no is : "<<temp<<endl<<endl;
-        }
-        case 4:{
-            string temp;
-            char temps[400];
-            cout<<"You have entered choice - 4"<<endl;
-            cout<<"To change your Banking Name"<<endl;
-            cout<<"Please enter your new Banking Name : ";
-            getline(cin>>ws, temp);
-            strcpy(temps, temp.c_str());
-            this->filldet(temps,NAME);
-            cout<<endl<<"Successfully Changed !!!"<<endl;
-            cout<<"Your new Banking Name : "<<temp<<endl<<endl;
-        }
-        case 5:{
-            string temp;
-            char temps[400];
-            cout<<"You have entered choice - 5"<<endl;
-            cout<<"To change your Address"<<endl;
-            cout<<"Please enter your new Address : ";
-            getline(cin>>ws, temp);
-            strcpy(temps, temp.c_str());
-            this->filldet(temps,ADDRESS);
-            cout<<endl<<"Successfully Changed !!!"<<endl;
-            cout<<"Your new Address : "<<temp<<endl<<endl;
-        }
-        case 6:{
-            string temp;
-            char temps[400];
-            cout<<"You have entered choice - 6"<<endl;
-            cout<<"To change your Email Address"<<endl;
-            cout<<"Please enter your new Email Address : ";
-            getline(cin>>ws, temp);
-            strcpy(temps, temp.c_str());
-            this->filldet(temps,EMAIL);
-            cout<<endl<<"Successfully Changed !!!"<<endl;
-            cout<<"Your new Email Address : "<<temp<<endl<<endl;
-        }
-    }
-    cout<<endl<<endl<<"Closing Update KYC portal"<<endl;
-    saveaccs();
 }
 
 long long int randgen(int nodigits){
@@ -339,16 +238,16 @@ void createaccount(){
     // Function to create a new account
     printupper();
     cout<<endl<<"Option 1:Create new account..."<<endl<<endl;
-    string det[13]={"Name", "Father\'s Name", "Gender", "Address", "Maritial status", 
+    string det[12]={"Name", "Father\'s Name", "Gender", "Address", "Maritial status", 
     "Nationality", "Date of birth", "Age", "Phone Number", "Aadhar Number", "PAN Number", 
-    "Account Type", "email"};
+    "Account Type"};
     Account tempacc;
 
     // Storing user details
     for (int i=0; i<12; i++){
         cout<<"Enter your "<<det[i]<<":";
         if (i==NAME || i==FNAME || i==ADDRESS || i==MARITIAL || i==NATIONALITY 
-        || i==DOB || i==GENDER || i==ACCTYPE || i==EMAIL){
+        || i==DOB || i==GENDER || i==ACCTYPE){
             string temp;
             getline(cin>>ws, temp);
             char temps[400];
@@ -374,7 +273,7 @@ void createaccount(){
     // Displaying account number to user and updating accounts.dat file
     cout<<endl<<endl;
     cout<<"Congratulations! Your account has been created successfully.";
-    cout<<"Your account number is "<<tempacc.getAccNo()<<endl;
+    cout<<"Your account number is "<<tempacc.accno<<endl;
     saveaccs();
 }
 
@@ -413,16 +312,15 @@ void printoptions(){
                 break;
             }
             case 1:{
-                /*Code for cash deposit : Suchir*/
-                
+                /Code for cash deposit : Suchir/
+                long long int tempdepo;
+                cout<<endl<<endl<<"Option 1: Cash Deposit..."<<endl<<endl;
+                cout<<"Enter the amount to deposit: ";
+                cin>>tempdepo;
+                acc->withdraw(tempdepo);
             }
             case 2:{
-                /*Code for cash withdrawal : Yogesh*/
-                long long int tempy;
-                cout<<endl<<endl<<"Option 2: Cash Withdrawal..."<<endl<<endl;
-                cout<<"Enter the amount : ";
-                cin>>tempy;
-                acc->withdraw(tempy);
+                /Code for cash withdrawal : Yogesh/
             }
             case 3:{
                 printupper();
@@ -430,32 +328,35 @@ void printoptions(){
                 acc->appdebcard();
             }
             case 4:{
-                /*Code for checking balance : Suchir*/
+                /Code for checking balance : Suchir/
+                 cout<<endl<<endl<<"Option 4: Check for Balance..."<<endl<<endl;
+                 cout<<"Available Balance : "<<acc->chkbal()<<endl<<endl;
             }
             case 5:{
-                /*Code for updating kyc : Yogesh*/
-                cout<<endl<<endl<<"Option 5: Updating KYC..."<<endl<<endl;
-                acc->updatekyc();
+                /Code for updating kyc : Yogesh/
             }
             case 6:{
-                /*Code for tranfering fund : Yogesh*/
-                long long int recp_account_no;
-                long long int recp_amount;
-                Account *recp_acc;
-                cout<<endl<<endl<<"Option 6: Transfering Funds..."<<endl<<endl;
-                cout<<"Enter the Recipient Account no : ";
-                cin>>recp_account_no;
-                cout<<"Enter the Amount to transfer : ";
-                cin>>recp_amount;
-                recp_acc = getaccount(recp_account_no);
-                acc->withdraw(recp_amount);
-                if(acc->chkbal() > recp_amount){
-                    recp_acc->deposit(recp_amount);
-                    cout<<"The Amount has been successfully transfered "<<endl;
-                }
-                else{
-                    cout<<"The Amount has not been transfered"<<endl;
-                }
+                /Code for tranfering fund : Suchir/
+              long long int recipient_account_no;
+              long long int recipient_amount;
+              Account *recipient_acc;
+              cout<<endl<<endl<<"Option 6: Transferring Funds..."<<endl<<endl;
+              cout<<"Enter the Recipient Account no : ";
+              cin>>recipient_account_no;
+              cout<<"Enter the Recipient Amount to transfer : ";
+              cin>>recipient_amount;
+              recipient_acc = getaccount(recipient_account_no);
+              acc->withdraw(recipient_amount);
+              if(acc->chkbal() > recipient_amount)
+              {
+                    recipient_acc->deposit(recipient_amount);
+                    cout<<"The Recipient Amount has been successfully transfered "<<endl;
+              }
+              else
+              {
+                    cout<<"The Recipient Amount has not been transfered"<<endl;
+              }
+            }
             }
         }
     }
@@ -469,7 +370,7 @@ Account* getaccount(long long int accno){
     // Function to get account object for a particular account number
     int i;
     for (i=0; i<num; i++){
-        if (accs[i].getAccNo()==accno){
+        if (accs[i].accno==accno){
             break;
         }
     }
